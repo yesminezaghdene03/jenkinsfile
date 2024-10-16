@@ -4,28 +4,27 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                // Cloner le dépôt Jenkinsfile
                 git branch: 'main', 
-                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git' // Suppression de la virgule ici
+                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile' // Commande pour nettoyer et compiler
+                sh 'mvn clean compile'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarQube') { // Utiliser l'ID de votre serveur SonarQube configuré dans Jenkins
+                withSonarQubeEnv('sonarQube') {
                     sh '''
                         mvn sonar:sonar \
-                        -Dsonar.projectKey=sonarQube1 \ // Remplacez par la clé de votre projet
-                        -Dsonar.projectName=sonarQube1 \ // Remplacez par le nom de votre projet
+                        -Dsonar.projectKey=sonarQube1 \
+                        -Dsonar.projectName=sonarQube1 \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.login=behsy9-cynnyq-qaVguV
-                    ''' // Assurez-vous que cette ligne se termine par ''' et non par '.
+                    '''
                 }
             }
         }
