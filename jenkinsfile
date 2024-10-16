@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Cloner le dépôt Git depuis GitHub
                 git branch: 'main', 
-                    url: 'https://github.com/yesminezaghdene03/jenkinsfile', // Remplacez par l'URL de votre projet
+                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git', // Remplacez par l'URL de votre projet
             }
         }
 
