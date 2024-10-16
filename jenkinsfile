@@ -1,0 +1,32 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Clone') {
+            steps {
+                // Cloner le dépôt Jenkinsfile à partir du dépôt 'yesminezaghdene03/jenkinsfile'
+                git branch: 'main', 
+                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git', 
+                    credentialsId: 'votre_id_de_credentiels' // Remplacez par votre ID d'identifiants Jenkins si le dépôt est privé
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'echo "Building the project..."'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'echo "Running tests..."'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'echo "Deploying the project..."'
+            }
+        }
+    }
+}
