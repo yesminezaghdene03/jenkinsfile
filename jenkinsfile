@@ -7,7 +7,6 @@ pipeline {
                 // Cloner le dépôt Jenkinsfile
                 git branch: 'main', 
                     url: 'https://github.com/yesminezaghdene03/jenkinsfile.git', 
-                    credentialsId: 'votre_id_de_credentiels' // Remplacez par votre ID d'identifiants Jenkins
             }
         }
 
