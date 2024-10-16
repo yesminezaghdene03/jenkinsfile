@@ -4,27 +4,37 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                // Cloner le dépôt Jenkinsfile à partir du dépôt 'yesminezaghdene03/jenkinsfile'
+                // Cloner le dépôt Git depuis GitHub
                 git branch: 'main', 
-                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git', 
-                    credentialsId: 'votre_id_de_credentiels' // Remplacez par votre ID d'identifiants Jenkins si le dépôt est privé
+                    url: 'https://github.com/yesminezaghdene03/jenkinsfile', // Remplacez par l'URL de votre projet
             }
         }
 
         stage('Build') {
             steps {
-                sh 'echo "Building the project..."'
+                // Nettoyer et compiler le projet
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Test') {
+        stage('SonarQube Analysis') {
             steps {
-                sh 'echo "Running tests..."'
+                // Analyser le projet avec SonarQube
+                withSonarQubeEnv('SonarQube Server') { // Assurez-vous d'avoir configuré votre serveur SonarQube dans Jenkins
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=sonarQube1 \ // Remplacez par la clé de votre projet
+                        -Dsonar.projectName=sonarQube1 \ // Remplacez par le nom de votre projet
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.login=behsy9-cynnyq-qaVguV // Votre mot de passe SonarQube
+                    '''
+                }
             }
         }
 
         stage('Deploy') {
             steps {
+                // Étapes pour déployer le projet (si nécessaire)
                 sh 'echo "Deploying the project..."'
             }
         }
