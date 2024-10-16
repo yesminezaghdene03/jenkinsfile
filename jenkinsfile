@@ -4,37 +4,35 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                // Cloner le dépôt Git depuis GitHub
+                // Cloner le dépôt Jenkinsfile
                 git branch: 'main', 
-                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git', // Remplacez par l'URL de votre projet
+                    url: 'https://github.com/yesminezaghdene03/jenkinsfile.git', 
+                    credentialsId: 'votre_id_de_credentiels' // Remplacez par votre ID d'identifiants Jenkins
             }
         }
 
         stage('Build') {
             steps {
-                // Nettoyer et compiler le projet
-                sh 'mvn clean compile'
+                sh 'mvn clean compile' // Commande pour nettoyer et compiler
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                // Analyser le projet avec SonarQube
-                withSonarQubeEnv('SonarQube Server') { // Assurez-vous d'avoir configuré votre serveur SonarQube dans Jenkins
+                withSonarQubeEnv('sonarQube') { // Utiliser l'ID de votre serveur SonarQube configuré dans Jenkins
                     sh '''
                         mvn sonar:sonar \
-                        -Dsonar.projectKey=sonarQube1 \ // Remplacez par la clé de votre projet
-                        -Dsonar.projectName=sonarQube1 \ // Remplacez par le nom de votre projet
+                        -Dsonar.projectKey=sonarQube1 // Remplacez par la clé de votre projet
+                        -Dsonar.projectName=sonarQube1 // Remplacez par le nom de votre projet
                         -Dsonar.projectVersion=1.0 \
-                        -Dsonar.login=behsy9-cynnyq-qaVguV // Votre mot de passe SonarQube
-                    '''
+                        -Dsonar.login=behsy9-cynnyq-qaVguV
+                    ''' // Assurez-vous que cette ligne se termine par ''' et non par '.
                 }
             }
         }
 
         stage('Deploy') {
             steps {
-                // Étapes pour déployer le projet (si nécessaire)
                 sh 'echo "Deploying the project..."'
             }
         }
